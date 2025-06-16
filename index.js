@@ -1,12 +1,12 @@
 // IMPORT
 
 const express = require("express");
-require("dotenv").config();
 const { notFound, errorHandler } = require("./middlewares/errors");
 const movieRouter = require("./router/moviesRouter");
 
 // CONFIG
 
+require("dotenv").config();
 const app = express();
 const APP_PORT = process.env.APP_PORT;
 const APP_URL = process.env.APP_URL;
@@ -21,15 +21,16 @@ app.use(express.json());
 app.use("/movies", movieRouter);
 
 app.get("/", (req, res) => {
-  console.log(nbjsdv);
-  res.send("<h1>Server del mio blog</h1>");
+  res.send("<h1>Welcome!</h1>");
 });
 
 // ERROR HANDLERS MIDDLEWARES
+
 app.use(errorHandler);
 app.use(notFound);
 
 // LISTEN
+
 app.listen("3000", () => {
   console.log(`Il server é in ascolto su ${APP_URL}:${APP_PORT}`);
 });

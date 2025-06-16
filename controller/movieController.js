@@ -1,3 +1,5 @@
+// IMPORT
+
 const connection = require("../data/db");
 
 // INDEX

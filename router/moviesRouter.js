@@ -1,6 +1,7 @@
+// IMPORT
+
 const express = require("express");
 const router = express.Router();
-
 const { index, show } = require("../controller/movieController");
 
 // INDEX
