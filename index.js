@@ -2,8 +2,8 @@
 
 const express = require("express");
 require("dotenv").config();
-// const connection = require("./data/db");
 const movieController = require("./controller/movieController");
+const { notFound, errorHandler } = require("./middlewares/errors");
 
 // CONFIG
 
@@ -16,18 +16,21 @@ const APP_URL = process.env.APP_URL;
 app.use(express.static("public"));
 app.use(express.json());
 
-// ERROR HANDLERS
-
 // CRUD
 
 app.get("/movies", movieController.index);
+app.get("/movies/:id", movieController.show);
+
+app.get("/", (req, res) => {
+  console.log(nbjsdv);
+  res.send("<h1>Server del mio blog</h1>");
+});
+
+// ERROR HANDLERS MIDDLEWARES
+app.use(errorHandler);
+app.use(notFound);
 
 // LISTEN
-
-// app.get("/", (req, res) => {
-//   res.send("<h1>Server del mio blog</h1>");
-// });
-
 app.listen("3000", () => {
   console.log(`Il server é in ascolto su ${APP_URL}:${APP_PORT}`);
 });
