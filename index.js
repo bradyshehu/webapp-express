@@ -2,8 +2,8 @@
 
 const express = require("express");
 require("dotenv").config();
-const movieController = require("./controller/movieController");
 const { notFound, errorHandler } = require("./middlewares/errors");
+const movieRouter = require("./router/moviesRouter");
 
 // CONFIG
 
@@ -16,10 +16,9 @@ const APP_URL = process.env.APP_URL;
 app.use(express.static("public"));
 app.use(express.json());
 
-// CRUD
+// ROUTER
 
-app.get("/movies", movieController.index);
-app.get("/movies/:id", movieController.show);
+app.use("/movies", movieRouter);
 
 app.get("/", (req, res) => {
   console.log(nbjsdv);

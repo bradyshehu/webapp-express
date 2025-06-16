@@ -1,5 +1,7 @@
 const connection = require("../data/db");
 
+// INDEX
+
 const index = (req, res) => {
   const sql = "SELECT * FROM movies";
   connection.query(sql, (err, results) => {
@@ -11,11 +13,13 @@ const index = (req, res) => {
   });
 };
 
+// SHOW
+
 const show = (req, res) => {
   const id = req.params.id;
   const moviesSql = "SELECT * FROM movies WHERE id=?";
   const reviewSql =
-    "* FROM reviews INNER JOIN movies ON movies.id = reviews.movie_id WHERE id=?";
+    "SELECT * FROM reviews INNER JOIN movies ON movies.id = reviews.movie_id WHERE movies.id=?";
 
   connection.query(moviesSql, [id], (err, moviesResults) => {
     if (err) return res.status(500).json({ error: "Internal Server Error" });
@@ -23,7 +27,7 @@ const show = (req, res) => {
 
     connection.query(reviewSql, [id], (err, reviewResults) => {
       if (err) return res.status(500).json({ error: "Internal Server Error" });
-      //   movie.review = reviewResults;
+      movie.reviews = reviewResults;
       res.json(movie);
     });
   });
