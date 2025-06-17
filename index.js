@@ -3,6 +3,7 @@
 const express = require("express");
 const { notFound, errorHandler } = require("./middlewares/errors");
 const movieRouter = require("./router/moviesRouter");
+const cors = require("cors");
 
 // CONFIG
 
@@ -15,6 +16,11 @@ const APP_URL = process.env.APP_URL;
 
 app.use(express.static("public"));
 app.use(express.json());
+app.use(
+  cors({
+    origin: "/http://localhost:5173/",
+  })
+);
 
 // ROUTER
 
