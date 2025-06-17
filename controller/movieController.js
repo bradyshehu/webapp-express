@@ -1,6 +1,10 @@
 // IMPORT
 
 const connection = require("../data/db");
+require("dotenv").config();
+
+const APP_PORT = process.env.APP_PORT;
+const APP_URL = process.env.APP_URL;
 
 // INDEX
 
@@ -9,7 +13,7 @@ const index = (req, res) => {
   connection.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Internal Server Error" });
     results.map((result) => {
-      result.image = `/public/movies_cover/${result.image}`;
+      result.image = `${APP_URL}:${APP_PORT}/img/${result.image}`;
     });
     res.json(results);
   });
