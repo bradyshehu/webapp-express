@@ -30,6 +30,7 @@ const show = (req, res) => {
   connection.query(moviesSql, [id], (err, moviesResults) => {
     if (err) return res.status(500).json({ error: "Internal Server Error" });
     const movie = moviesResults[0];
+    movie.image = `${APP_URL}:${APP_PORT}/img/${movie.image}`;
 
     connection.query(reviewSql, [id], (err, reviewResults) => {
       if (err) return res.status(500).json({ error: "Internal Server Error" });
