@@ -43,17 +43,18 @@ const show = (req, res) => {
 };
 
 const storeReview = (req, res) => {
-  const id = req.params.id;
+  const movie_id = req.params.id;
   const publishReviewSql = `
  INSERT INTO reviews ( movie_id, name, text, vote) VALUES ( ?, ?, ?, ?)`;
   const { name, text, vote } = req.body;
-  const reviewValuesSql = [id, name, text, vote];
+  const reviewValuesSql = [movie_id, name, text, vote];
 
   connection.query(publishReviewSql, reviewValuesSql, (err, results) => {
     if (err)
       return res.status(500).json({ message: "Internal Server Error", err });
-    res.status(201).json({ message: "Recensione creata" });
-    console.log(results);
+    res
+      .status(201)
+      .json({ message: "Recensione creata", id: results.insertId });
   });
 };
 
