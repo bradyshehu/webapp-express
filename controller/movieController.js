@@ -29,6 +29,8 @@ const show = (req, res) => {
 
   connection.query(moviesSql, [id], (err, moviesResults) => {
     if (err) return res.status(500).json({ error: "Internal Server Error" });
+    if (moviesResults.length === 0)
+      return res.status(404).json({ error: "Movie not found" });
     const movie = moviesResults[0];
     movie.image = `${APP_URL}:${APP_PORT}/img/${movie.image}`;
 
@@ -40,4 +42,19 @@ const show = (req, res) => {
   });
 };
 
-module.exports = { index, show };
+const storeReview = (req, res) => {
+  const id = req.params.id;
+  const publishReviewSql = `
+ INSERT INTO reviews ( movie_id, name, text, vote) VALUES ( ?, ?, ?, ?)`;
+  const { name, text, vote } = req.body;
+  const reviewValuesSql = [id, name, text, vote];
+
+  connection.query(publishReviewSql, reviewValuesSql, (err, results) => {
+    if (err)
+      return res.status(500).json({ message: "Internal Server Error", err });
+    res.status(201).json({ message: "Recensione creata" });
+    console.log(results);
+  });
+};
+
+module.exports = { index, show, storeReview };
